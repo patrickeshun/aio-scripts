@@ -29,7 +29,7 @@ removeonline(){
 i=1
     [[ -d /var/www/html ]] && [[ -e /var/www/html/$arquivo_move ]] && rm -rf /var/www/html/$arquivo_move > /dev/null 2>&1
     [[ -e /var/www/$arquivo_move ]] && rm -rf /var/www/$arquivo_move > /dev/null 2>&1
-    echo -e "${cor[5]}Extraxion Exitosa Exitosa"
+    echo -e "${cor[5]}Extraction Successful"
     echo -e "$barra"
 echo "SUBIENDO"
 subironline
@@ -61,7 +61,7 @@ function backup_de_usuarios(){
 clear
 i=1
 [[ -e $bc ]] && rm $bc
-echo -e "\033[1;37mHaciendo Backup de Usuarios...\033[0m"
+echo -e "\033[1;37mBacking up Users...\033[0m"
 [[ -e /bin/ejecutar/token ]] && passTK=$(cat < /bin/ejecutar/token)
 for user in `awk -F : '$3 > 900 { print $1 }' /etc/passwd |grep -v "nobody" |grep -vi polkitd |grep -vi systemd-[a-z] |grep -vi systemd-[0-9] |sort`
 #for user in `cat "/etc/passwd"|grep 'home'|grep 'false'|grep -v 'syslog' | cut -d: -f1 |sort`
@@ -84,7 +84,7 @@ sl=$((dias_use + 1))
 i=$((i + 1))
 [[ -z "$limite" ]] && limite="5"
 else
-echo -e "\033[1;31mNo fue posible obtener la contraseña del usuario\033[1;37m ($user)"
+echo -e "\033[1;31mFailed to obtain the user's password\033[1;37m ($user)"
 #read -p "Introduzca la contraseña manualmente o pulse ENTER: " pass
  if [ -z "$pass" ]; then
 pass="$user"
@@ -95,10 +95,10 @@ fi
 [[ "$limite" =~ ^[0-9]+$ ]] && echo "$user:$pass:$limite:$sl" >> $bc && echo -e "\033[1;37mUser $user \033[0;35m [\033[0;36mSSH\033[0;35m]\033[0;31m Backup [\033[1;31mOK\033[1;37m] con $sl DIAS\033[0m"
 done
 echo " "
-echo -e "\033[1;31mBackup Completado !!!\033[0m"
+echo -e "\033[1;31mBackup Completed !!!\033[0m"
 echo " "
-echo -e "\033[1;37mLa informacion de los usuarios $i se encuentra en el archivo \033[1;31m $bc \033[1;37m"
+echo -e "\033[1;37mUser information $i is in the file \033[1;31m $bc \033[1;37m"
 }
 backup_de_usuarios
-[[ -z ${_SFTP} ]] && echo -e "SERVICIO FTP NO ACTIVO / REMOVIDO " || removeonline
+[[ -z ${_SFTP} ]] && echo -e "FTP SERVICE NOT ACTIVE / REMOVED " || removeonline
 rm $HOME/$arquivo_move
